@@ -23,16 +23,18 @@ symbol_value = { # Value of syymbols
 
 def check_winnings(columns, lines, bet, values):
     winnings = 0
+    winning_lines = []
     for line in range(lines):
-        symbol = columns[0][lines]
+        symbol = columns[0][line]
         for column in columns:
             symbol_to_check = column[line]
             if symbol != symbol_to_check:
                 break
         else:
             winnings += values[symbol] * bet
+            winning_lines.append(lines + 1)
             
-    return winnings
+    return winnings, winning_lines
 
 
 def get_slot_machine_spin(rows, cols, symbols):
@@ -113,9 +115,8 @@ def get_bet():
             print("Enter a number")
     return bet
 
-# Main Function 
-def main():
-    balance = deposit() # Transforming all the functions to variables
+
+def spin(balance):
     lines = get_number_of_lines()
     
     # Deposit need to be > than bet
@@ -132,5 +133,20 @@ def main():
     
     slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
     print_slot_machine(slots)
+    winnings, winning_lines = check_winnings(slots, lines, bet, symbol_value)
+    print(f"You won!! ${winnings}!")
+    print(f"You won on lines: {winning_lines}")
+    return winnings - total_bet
+    
+# Main Function 
+def main():
+    balance = deposit() # Transforming all the functions to variables
+    while True:
+        print(f"Current balance is: ${balance}")
+        answer = input("Press enter to play (Q to quit)")
+        if answer.lower() == "q":
+            break
+        balance += spin(balance)
+    print(f"You left with ${balance}")
     
 main()
