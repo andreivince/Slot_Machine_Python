@@ -1,6 +1,20 @@
+import random # Random 
+
 MAX_LINES = 3 # It's used all capslock when variable is constant and not gonna change
 MAX_BET = 300
 MIN_BET = 1
+
+ROWS = 3
+COLS = 3
+
+symbol_count {
+    "A": 2,
+    "B": 4,
+    "C": 6,
+    "D": 8
+}
+
+def get_slot_machine_spin(rows, cols, symbols)
 
 # Function to take deposit
 
